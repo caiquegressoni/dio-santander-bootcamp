@@ -20,6 +20,6 @@ Revise sobre concatenação e classe String com método concat
 Depois de todas as informações terem sido inseridas, o sistema deverá exibir a seguinte mensagem:
 "Olá [Nome Cliente], obrigado por criar uma conta em nosso banco, sua agência é [Agencia], conta [Numero] e seu saldo [Saldo] já está disponível para saque".
 
-**Obs: Todo o resumo da atividade foi tirada do repositorio: https://github.com/digitalinnovationone/trilha-java-basico/tree/main/desafios/sintaxe. Com intuido de facilitar, caso queira rever algum requiso do projeto.
-
 Os campos em [ ] devem ser alterados pelas informações que forem inseridas pelos usuários.
+
+#Obs: Todo o resumo da atividade foi tirada do repositorio: https://github.com/digitalinnovationone/trilha-java-basico/tree/main/desafios/sintaxe. Com intuido de facilitar, caso queira rever algum requiso do projeto.
