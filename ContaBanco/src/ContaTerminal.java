@@ -17,7 +17,7 @@ public class ContaTerminal {
             System.out.println("Digite o número da agência (formato 000-1XX): ");
             agency = sc.next();
 
-        }while(!ValidateAgency(agency));
+        }while(ValidateAgency(agency));
 
         System.out.println("Digite o nome do cliente: ");
         var client = sc.next();
