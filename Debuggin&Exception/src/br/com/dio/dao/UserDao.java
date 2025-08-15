@@ -2,7 +2,6 @@ package br.com.dio.dao;
 
 import br.com.dio.excepition.UserNotFoundExcepition;
 import  br.com.dio.model.UserModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class UserDao {
     }
 
     public void delete(final long id){
-        var toDelelete = findById(id);
-        models.remove(toDelelete);
+        var toDelete = findById(id);
+        models.remove(toDelete);
     }
 
     public UserModel findById(final long id){

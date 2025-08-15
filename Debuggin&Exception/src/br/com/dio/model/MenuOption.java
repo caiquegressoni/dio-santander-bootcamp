@@ -3,7 +3,7 @@ package br.com.dio.model;
 public enum MenuOption {
 
     SAVE,
-    CREATE,
+    UPDATE,
     DELETE,
     FIND_BY_ID,
     FIND_ALL,
