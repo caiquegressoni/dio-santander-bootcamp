@@ -1,4 +1,5 @@
 import br.com.dio.dao.UserDao;
+import br.com.dio.excepition.*;
 import br.com.dio.model.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,14 +33,22 @@ public class main {
                     System.out.printf("Usuario %s atualizado com sucesso.", user);
                 }
                 case DELETE -> {
+                    try{
                     dao.delete(requestId()); 
                     System.out.println("Usuario deletado com sucesso.");
+                    } catch(UserNotFoundExcepition | EmptyStorageException ex){
+                        System.out.println(ex.getMessage());
+                    }
             }
                 case FIND_BY_ID -> {
-                    var id = requestId();
-                    var user = dao.findById(id);
-                    System.out.printf("Usuario encontrado com id: %s", id);
-                    System.out.println(user);
+                    try{
+                        var id = requestId();
+                        var user = dao.findById(id);
+                        System.out.println(user);
+                        System.out.printf("Usuario encontrado com id: %s", id);
+                    } catch(UserNotFoundExcepition | EmptyStorageException ex){
+                        System.out.println(ex.getMessage());
+                    }
                 }
                 case FIND_ALL -> {
                     var users = dao.findAll();
@@ -72,10 +81,11 @@ public class main {
         private static UserModel requestToUpdate(){
         System.out.println("Informe o id do usuario: ");
         var id = sc.nextLong();
+
         System.out.println("Informe o nome do usuario: ");
-        var name = sc.nextLine();
+        var name = sc.next();
         System.out.println("Informe o email do usuario: ");
-        var email = sc.nextLine();
+        var email = sc.next();
         System.out.println("Informe o ano de nascimento do usuario (dd/mm/yyyy): ");
         var birthdayString = sc.next();
         var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
