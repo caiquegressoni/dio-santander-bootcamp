@@ -1,6 +1,7 @@
 import br.com.dio.dao.UserDao;
 import br.com.dio.excepition.*;
 import br.com.dio.model.*;
+import static br.UserValidator.verifyModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -74,24 +75,26 @@ public class main {
         var birthdayString = sc.next();
         var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         var birthday = LocalDate.parse(birthdayString, formatter);
-
-        return new UserModel(0, name, email, birthday);
+        var user = new UserModel(0, name, email, birthday);
+        verifyModel(user);
+        return user;
     }
 
-        private static UserModel requestToUpdate(){
-        System.out.println("Informe o id do usuario: ");
-        var id = sc.nextLong();
 
-        System.out.println("Informe o nome do usuario: ");
-        var name = sc.next();
-        System.out.println("Informe o email do usuario: ");
-        var email = sc.next();
-        System.out.println("Informe o ano de nascimento do usuario (dd/mm/yyyy): ");
-        var birthdayString = sc.next();
-        var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        var birthday = LocalDate.parse(birthdayString, formatter);
+    private static UserModel requestToUpdate(){
+    System.out.println("Informe o id do usuario: ");
+    var id = sc.nextLong();
 
-        return new UserModel(id, name, email, birthday);
+    System.out.println("Informe o nome do usuario: ");
+    var name = sc.next();
+    System.out.println("Informe o email do usuario: ");
+    var email = sc.next();
+    System.out.println("Informe o ano de nascimento do usuario (dd/mm/yyyy): ");
+    var birthdayString = sc.next();
+    var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    var birthday = LocalDate.parse(birthdayString, formatter);
+
+    return new UserModel(id, name, email, birthday);
     }
     
 }
