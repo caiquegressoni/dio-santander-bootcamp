@@ -1,7 +1,7 @@
 import br.com.dio.dao.UserDao;
 import br.com.dio.excepition.*;
 import br.com.dio.model.*;
-import static br.UserValidator.verifyModel;
+import static br.com.dio.validator.UserValidator.verifyModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -26,12 +26,24 @@ public class main {
             switch(selectedOption){
                 
                 case SAVE -> {
-                    var user = dao.save(requestToSave());
-                    System.out.printf("Usuario %s salvo com sucesso.", user);
+                    try {
+                        var user = dao.save(requestToSave());
+                        System.out.printf("Usuario %s salvo com sucesso.", user);  
+                    }catch(ValidatorExcpition ex) {
+                        System.err.println(ex.getMessage());
+
+                    }
                 }
                 case UPDATE -> {
-                    var user = dao.update(requestToUpdate()); 
-                    System.out.printf("Usuario %s atualizado com sucesso.", user);
+                    try{
+                        var user = dao.update(requestToUpdate()); 
+                        System.out.printf("Usuario %s atualizado com sucesso.", user);
+                    }catch(UserNotFoundExcepition | EmptyStorageException ex){
+                        System.out.println(ex.getMessage());
+
+                    }catch(ValidatorExcpition ex){
+                        System.err.println(ex.getMessage());
+                    }
                 }
                 case DELETE -> {
                     try{
@@ -66,7 +78,7 @@ public class main {
         return sc.nextLong();   
     }
 
-    private static UserModel requestToSave(){
+    private static UserModel requestToSave() throws ValidatorExcpition{
         System.out.println("Informe o nome do usuario: ");
         var name = sc.next();
         System.out.println("Informe o email do usuario: ");
@@ -75,13 +87,17 @@ public class main {
         var birthdayString = sc.next();
         var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         var birthday = LocalDate.parse(birthdayString, formatter);
-        var user = new UserModel(0, name, email, birthday);
+        return validateInputs(0, name, email, birthday);
+    }
+
+    private static UserModel validateInputs(final long id, final String name, final String email, 
+    final LocalDate birthday) throws ValidatorExcpition {
+        var user = new UserModel(id, name, email, birthday);
         verifyModel(user);
         return user;
     }
 
-
-    private static UserModel requestToUpdate(){
+    private static UserModel requestToUpdate() throws ValidatorExcpition{
     System.out.println("Informe o id do usuario: ");
     var id = sc.nextLong();
 
@@ -94,7 +110,7 @@ public class main {
     var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     var birthday = LocalDate.parse(birthdayString, formatter);
 
-    return new UserModel(id, name, email, birthday);
+    return validateInputs(0, name, email, birthday);
     }
     
 }
